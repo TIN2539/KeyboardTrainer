@@ -288,42 +288,49 @@ namespace KeyboardTrainer
 			if (btnStart.IsEnabled)
 				return;
 
-			if (e.Key == Key.Back)
-			{
-				if (tbTypedText.Text.Length > 0)
-				{
-					tbTypedText.Text = tbTypedText.Text.Remove(tbTypedText.Text.Length - 1);
-					if (correctlyTypedTextLength >= tbTypedText.Text.Length)
-					{
-						correctlyTypedTextLength = tbTypedText.Text.Length;
-						tbTypedText.Foreground = new SolidColorBrush(Colors.Black);
-					}
-					tbTypedText.Select(0, correctlyTypedTextLength);
-				}
-				return;
-			}
+			//if (e.Key == Key.Back)
+			//{
+			//	if (tbTypedText.Text.Length > 0)
+			//	{
+			//		tbTypedText.Text = tbTypedText.Text.Remove(tbTypedText.Text.Length - 1);
+			//		if (correctlyTypedTextLength >= tbTypedText.Text.Length)
+			//		{
+			//			correctlyTypedTextLength = tbTypedText.Text.Length;
+			//			tbTypedText.Foreground = new SolidColorBrush(Colors.Black);
+			//		}
+			//		tbTypedText.Select(0, correctlyTypedTextLength);
+			//	}
+			//	return;
+			//}
 
 			if (allKeyboardButtons[e.Key] is ControlKey)
 				return;
 
 			e.Handled = true;
 
+
 			if (e.Key == Key.Space)
+			{
 				tbTypedText.AppendText(" ");
+			}
 			else if (allKeyboardButtons[e.Key] is LetterKey || allKeyboardButtons[e.Key] is SpecialCharKey)
+			{
 				tbTypedText.AppendText(allKeyboardButtons[e.Key].TextElement.Text);
+			}
 
 			if (tbGeneratedText.Text[correctlyTypedTextLength] == tbTypedText.Text[correctlyTypedTextLength])
+			{
 				correctlyTypedTextLength++;
+			}
 
 			if (tbTypedText.Text.Length <= tbGeneratedText.Text.Length)
+			{
 				if (tbGeneratedText.Text[tbTypedText.Text.Length - 1] != tbTypedText.Text[tbTypedText.Text.Length - 1])
+				{
 					fails++;
-
-			if (correctlyTypedTextLength == tbTypedText.Text.Length)
-				tbTypedText.Foreground = new SolidColorBrush(Colors.Black);
-			else
-				tbTypedText.Foreground = new SolidColorBrush(Colors.Red);
+					tbTypedText.Text = tbTypedText.Text.Substring(0, tbTypedText.Text.Length - 1);
+				}
+			}
 
 			tbFails.Text = fails.ToString();
 			tbSpeed.Text = Math.Round(correctlyTypedTextLength / (DateTime.Now - startTime).TotalMinutes).ToString();
