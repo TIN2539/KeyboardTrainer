@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyboardTrainer3", "KeyboardTrainer3\KeyboardTrainer3.csproj", "{E49C03C1-7021-4655-B901-8D2E2A475A91}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyboardTrainer", "KeyboardTrainer3\KeyboardTrainer.csproj", "{E49C03C1-7021-4655-B901-8D2E2A475A91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
