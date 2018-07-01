@@ -54,6 +54,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ControlKey.cs" />
+    <Compile Include="DigitKey.cs" />
+    <Compile Include="KeyboardButton.cs" />
+    <Compile Include="LetterKey.cs" />
+    <Compile Include="SpaceKey.cs" />
+    <Compile Include="SpecialCharKey.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

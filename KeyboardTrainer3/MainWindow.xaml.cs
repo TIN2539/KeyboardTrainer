@@ -2,126 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 
 namespace KeyboardTrainer
 {
-	internal class KeyboardButton
-	{
-		public KeyboardButton(string regularValue, string shiftValue, int row, int column, int columnSpan, Color backgroundColor)
-		{
-			Value = regularValue;
-			ShiftValue = shiftValue;
-
-			Border border = new Border
-			{
-				Margin = new Thickness(2.0),
-				BorderBrush = new SolidColorBrush(Colors.Black),
-				BorderThickness = new Thickness(1.5),
-				Background = new SolidColorBrush(backgroundColor),
-				CornerRadius = new CornerRadius(7.0)
-			};
-
-			TextBlock textBlock = new TextBlock
-			{
-				Text = regularValue,
-				FontSize = 24.0,
-				HorizontalAlignment = HorizontalAlignment.Center,
-				VerticalAlignment = VerticalAlignment.Center,
-				Margin = new Thickness(0, -3, 0, 0)
-			};
-
-			border.Child = textBlock;
-			Grid.SetRow(border, row);
-			Grid.SetColumn(border, column);
-			Grid.SetColumnSpan(border, columnSpan);
-
-			TextElement = textBlock;
-			GridElement = border;
-		}
-
-		public UIElement GridElement { get; private set; }
-
-		public string ShiftValue { get; private set; }
-
-		public TextBlock TextElement { get; private set; }
-
-		public string Value { get; private set; }
-
-		public virtual void RefreshText(bool shiftIsOn, bool capsIsOn)
-		{ }
-	}
-
-	internal class ControlKey : KeyboardButton
-	{
-		public ControlKey(string value, int row, int column, int columnSpan)
-			: base(value, value, row, column, columnSpan, Colors.LightGray)
-		{
-			TextElement.FontSize = 16.0;
-		}
-	}
-
-	internal class LetterKey : KeyboardButton
-	{
-		public LetterKey(string value, int row, int column, Color backgroundColor)
-			: base(value.ToLower(), value.ToUpper(), row, column, 2, backgroundColor)
-		{ }
-
-		public override void RefreshText(bool shiftIsOn, bool capsIsOn)
-		{
-			if (shiftIsOn ^ capsIsOn)
-			{
-				TextElement.Text = ShiftValue;
-			}
-			else
-			{
-				TextElement.Text = Value;
-			}
-		}
-	}
-
-	internal class SpecialCharKey : KeyboardButton
-	{
-		public SpecialCharKey(string regularValue, string shiftValue, int row, int column, int columnSpan, Color backgroundColor)
-			: base(regularValue, shiftValue, row, column, columnSpan, backgroundColor)
-		{ }
-
-		public override void RefreshText(bool shiftIsOn, bool capsIsOn)
-		{
-			if (shiftIsOn)
-				TextElement.Text = ShiftValue;
-			else
-				TextElement.Text = Value;
-		}
-	}
-
-	internal class DigitKey : KeyboardButton
-	{
-		public DigitKey(string regularValue, string shiftValue, int row, int column, Color backgroundColor)
-			: base(regularValue, shiftValue, row, column, 2, backgroundColor)
-		{ }
-
-		public override void RefreshText(bool shiftIsOn, bool capsIsOn)
-		{
-			if (shiftIsOn)
-				TextElement.Text = ShiftValue;
-			else
-				TextElement.Text = Value;
-		}
-	}
-
-	internal class SpaceKey : KeyboardButton
-	{
-		public SpaceKey(int row, int column, int columnSpan, Color backgroundColor)
-			: base("Space", "Space", row, column, columnSpan, backgroundColor)
-		{
-			TextElement.FontSize = 16.0;
-		}
-	}
-
 	public partial class MainWindow : Window
 	{
 		private const int printableChars = 47;
@@ -287,21 +173,6 @@ namespace KeyboardTrainer
 
 			if (btnStart.IsEnabled)
 				return;
-
-			//if (e.Key == Key.Back)
-			//{
-			//	if (tbTypedText.Text.Length > 0)
-			//	{
-			//		tbTypedText.Text = tbTypedText.Text.Remove(tbTypedText.Text.Length - 1);
-			//		if (correctlyTypedTextLength >= tbTypedText.Text.Length)
-			//		{
-			//			correctlyTypedTextLength = tbTypedText.Text.Length;
-			//			tbTypedText.Foreground = new SolidColorBrush(Colors.Black);
-			//		}
-			//		tbTypedText.Select(0, correctlyTypedTextLength);
-			//	}
-			//	return;
-			//}
 
 			if (allKeyboardButtons[e.Key] is ControlKey)
 				return;
